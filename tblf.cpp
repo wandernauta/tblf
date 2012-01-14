@@ -59,11 +59,6 @@ std::string strval(int i) {
   return out.str();
 }
 
-// Compare two integers.
-char intcmp(int a, int b) {
-  return (a==b);
-}
-
 // A UTF-8 strlen function. Also works for ASCII.
 uint strlen_utf8(std::string s) {
   uint i = 0, j = 0, sz = s.size();
@@ -112,7 +107,7 @@ char probable_sep(std::istream &in) {
   for (cmit it = counts.begin(); it != counts.end(); ++it) {
     intvec vec = it->second;
 
-    if (!vec.size()) break; // No rows! Bail.
+    if (vec.empty()) break; // No rows! Bail.
 
     int min = *std::min_element(vec.begin(), vec.end());
     int max = *std::max_element(vec.begin(), vec.end());
@@ -183,7 +178,7 @@ int tblf(std::istream & f, char sep, bool want_zebra, bool want_right, bool want
   std::vector<uint> widths = col_widths(rows);
 
   // If something went wrong during the parsing stage, bail.
-  if (!rows.size()) {
+  if (rows.empty()) {
     std::cerr << "tblf: Misformed or empty data file, quitting." << std::endl;
     return 1;
   }
