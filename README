@@ -1,0 +1,41 @@
+NAME
+     tblf — format delimited data as a table
+
+SYNOPSIS
+     tblf [-lnrz] [-d delimiter] [file]
+
+DESCRIPTION
+     Prints a formatted version of the input table to stdout. Short values are
+     padded, and delimiters replaced with double spaces.
+
+     -d delimiter
+	     Use delimiter as the seperation token. If the -d argument is not
+	     given, tblf tries to deduce the delimiter character automati‐
+	     cally.
+
+     -l	     Left-align numeric values.
+
+     -n	     Add row numbers.
+
+     -r	     Right-align numeric values (default).
+
+     -z	     Enable zebra-stripe row highlighting.
+
+     file    The file to format. Use a single dash to read from stdin.
+
+EXAMPLES
+	   # Format the user database:
+	   $ tblf /etc/passwd
+	   # Decompress, cut and format a tab-seperated database dump:
+	   $ zcat db.tsv.gz | cut -f1-2 | tblf -
+
+SEE ALSO
+     cut(1), sort(1), uniq(1)
+
+AUTHOR
+     tblf is written by Wander Nauta <info@wandernauta.nl>
+
+REPORTING BUGS
+     Bugs should be reported to the GitHub issue tracker at:
+
+     <https://github.com/wandernauta/tblf/issues>

@@ -30,10 +30,6 @@ Enable zebra-stripe row highlighting.
 .It Ar file
 The file to format. Use a single dash to read from stdin.
 .El
-.Sh EXIT STATUS
-.Ex -std
-.Nm tblf
-prints a message to stderr and nothing to stdout if it thinks the input data is malformed. It will never output part of the source file.
 .Sh EXAMPLES
 .Bd -literal -offset indent
 # Format the user database:
@@ -49,5 +45,5 @@ $ zcat db.tsv.gz | cut -f1-2 | tblf -
 tblf is written by Wander Nauta <info@wandernauta.nl>
 .Sh REPORTING BUGS
 Bugs should be reported to the GitHub issue tracker at:
-
+.Pp
 <https://github.com/wandernauta/tblf/issues>
