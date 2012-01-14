@@ -2,7 +2,7 @@ NAME
      tblf — format delimited data as a table
 
 SYNOPSIS
-     tblf [-lnrz] [-d delimiter] [file]
+     tblf [-lnrz] [-d delimiter] file
 
 DESCRIPTION
      Prints a formatted version of the input table to stdout. Short values are
