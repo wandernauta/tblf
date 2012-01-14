@@ -6,7 +6,8 @@ SYNOPSIS
 
 DESCRIPTION
      Prints a formatted version of the input table to stdout. Short values are
-     padded, and delimiters replaced with double spaces.
+     padded, and delimiters replaced with double spaces.  tblf assumes all
+     input to be UTF-8 or US-ASCII encoded.
 
      -d delimiter
 	     Use delimiter as the seperation token. If the -d argument is not

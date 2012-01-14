@@ -64,6 +64,16 @@ char intcmp(int a, int b) {
   return (a==b);
 }
 
+// A UTF-8 strlen function. Also works for ASCII.
+uint strlen_utf8(std::string s) {
+  uint i = 0, j = 0, sz = s.size();
+  while (i < sz) {
+    if ((s[i] & 0xc0) != 0x80) j++;
+    i++;
+  }
+  return j;
+}
+
 // Try to find which seperator is the most probable.
 char probable_sep(std::istream &in) {
   countmap counts;
@@ -131,7 +141,7 @@ std::vector<uint> col_widths(table &tblf) {
   for (uint row = 0; row < tblf.size(); row++) {
     for (uint col = 0; col < tblf[row].size(); col++) {
       ensure_sz(w, col+1);
-      uint width = tblf[row][col].size();
+      uint width = strlen_utf8(tblf[row][col]);
       if (w[col] < width) {
         w[col] = width;
       }
@@ -183,7 +193,7 @@ int tblf(std::istream & f, char sep, bool want_zebra, bool want_right, bool want
 
     for (uint col = 0; col < rows[row].size(); col++) {
       std::string val = rows[row][col];
-      int len = val.length();
+      int len = strlen_utf8(val);
       int width = widths[col];
       int pad = (width - len);
       
