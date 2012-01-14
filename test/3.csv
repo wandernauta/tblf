@@ -1,0 +1,10 @@
+This is the tblf UTF8 test.|x
+All x chars should line up.|x
+This would mean that strlen|x
+for Unicode data gives good|x
+results even if the data in|x
+the input file has accented|x
+characters. Test follows...|x
+ééééééééééééééééééééééééééé|x
+èèèèèèèèèèèèèèèèèèèèèèèèèèè|x
+ççççççççççççççççççççççççççç|x
