@@ -1,0 +1,53 @@
+.Dd January 14, 2012 
+.Dt tblf
+.Sh NAME
+.Nm tblf
+.Nd format delimited data as a table
+.Sh SYNOPSIS
+.Nm tblf
+.Op Fl lnrz
+.Op Fl d Ar delimiter
+.Op Ar file
+.Sh DESCRIPTION
+Prints a formatted version of the input table to stdout. Short values are padded, and delimiters replaced with double spaces.
+.Bl -tag -width Ds
+.It Fl d Ar delimiter
+Use
+.Ar delimiter
+as the seperation token. If the
+.Fl d
+argument is not given,
+.Nm tblf
+tries to deduce the delimiter character automatically.
+.It Fl l
+Left-align numeric values.
+.It Fl n
+Add row numbers.
+.It Fl r
+Right-align numeric values (default).
+.It Fl z
+Enable zebra-stripe row highlighting.
+.It Ar file
+The file to format. Use a single dash to read from stdin.
+.El
+.Sh EXIT STATUS
+.Ex -std
+.Nm tblf
+prints a message to stderr and nothing to stdout if it thinks the input data is malformed. It will never output part of the source file.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+# Format the user database:
+$ tblf /etc/passwd
+# Decompress, cut and format a tab-seperated database dump:
+$ zcat db.tsv.gz | cut -f1-2 | tblf -
+.Ed
+.Sh SEE ALSO
+.Xr cut 1 ,
+.Xr sort 1 ,
+.Xr uniq 1
+.Sh AUTHOR
+tblf is written by Wander Nauta <info@wandernauta.nl>
+.Sh REPORTING BUGS
+Bugs should be reported to the GitHub issue tracker at:
+
+<https://github.com/wandernauta/tblf/issues>
