@@ -241,6 +241,12 @@ int main(int argc, char* argv[]) {
     }
   }
 
+  if (!argv[optind]) {
+    std::cerr << "usage: tblf [-lrnz] [-d delimiter] FILE" << std::endl;
+    std::cerr << "       tblf [-lrnz] [-d delimiter] -" << std::endl;
+    return 1;
+  }
+
   std::string file = std::string(argv[optind]);
 
   if (file == "-") {
