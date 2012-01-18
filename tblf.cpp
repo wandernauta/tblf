@@ -34,7 +34,7 @@
 #include <string>
 #include <algorithm> // For min_element/max_element
 
-#include <cstdlib>
+#include <getopt.h>
 
 typedef unsigned int uint;
 typedef std::vector< std::vector <std::string> > table;
@@ -162,24 +162,26 @@ int tblf(std::istream & f, char sep, bool want_zebra, bool want_right, bool want
     getline(f, line);
     std::vector<std::string> row;
     std::string val;
-    if (line == "") continue; // Collapse empty lines
+    if (line == "") {
+      continue; // Collapse empty lines
+    } else {
+      if (want_lineno) row.push_back(strval(lineno));
 
-    if (want_lineno) row.push_back(strval(lineno));
-
-    std::istringstream lines(line);
-    while (lines.good()) {
-      getline(lines, val, sep);
-      row.push_back(val);
+      std::istringstream lines(line);
+      while (lines.good()) {
+        getline(lines, val, sep);
+        row.push_back(val);
+      }
+      rows.push_back(row);
+      lineno++;
     }
-    rows.push_back(row);
-    lineno++;
   }
 
   std::vector<uint> widths = col_widths(rows);
 
   // If something went wrong during the parsing stage, bail.
   if (rows.empty()) {
-    std::cerr << "tblf: Misformed or empty data file, quitting." << std::endl;
+    std::cerr << "tblf: Misformed or empty data file, quitting after reading " << lineno << " lines" << std::endl;
     return 1;
   }
 
@@ -254,5 +256,8 @@ int main(int argc, char* argv[]) {
     std::ifstream f(file.c_str());
     return tblf(f, sep, want_zebra, want_right, want_lineno);
   }
+
+  // This shouldn't happen
+  return 1;
 }
 
