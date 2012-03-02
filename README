@@ -14,6 +14,11 @@ DESCRIPTION
 	     given, tblf tries to deduce the delimiter character automati‐
 	     cally.
 
+     -f field
+	     Only output the column pointed to by field , which is 1-indexed.
+	     Repeat the -f flag to output multiple columns.  tblf outputs all
+	     columns by default.
+
      -l	     Left-align numeric values.
 
      -n	     Add row numbers.

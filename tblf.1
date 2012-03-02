@@ -7,6 +7,7 @@
 .Nm tblf
 .Op Fl lnrz
 .Op Fl d Ar delimiter
+.Op Fl f Ar field
 .Ar file
 .Sh DESCRIPTION
 Prints a formatted version of the input table to stdout. Short values are padded, and delimiters replaced with double spaces.
@@ -21,6 +22,12 @@ as the seperation token. If the
 argument is not given,
 .Nm tblf
 tries to deduce the delimiter character automatically.
+.It Fl f Ar field
+Only output the column pointed to by the 1-indexed
+.Ar field
+argument. Repeat the
+.Fl f
+flag to output multiple columns. The default is to output all columns.
 .It Fl l
 Left-align numeric values.
 .It Fl n

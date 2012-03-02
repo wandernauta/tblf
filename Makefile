@@ -10,6 +10,7 @@ check: all
 	./tblf -nz test/1.csv
 	./tblf -n test/2.tsv
 	./tblf test/3.csv
+	./tblf -f6 -f7 test/4.csv
 
 README:
 	MANWIDTH=80 man -l ./tblf.1 | col | head -n-2 | tail -n+3 > README

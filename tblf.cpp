@@ -52,6 +52,13 @@ bool isnum(std::string in) {
   return (ins.rdbuf()->in_avail() == 0);
 }
 
+int intval(std::string in) {
+  std::istringstream ins(in);
+  int out;
+  ins >> out;
+  return out;
+}
+
 // Return the string version of an integer value.
 std::string strval(int i) {
   std::ostringstream out;
@@ -147,7 +154,7 @@ std::vector<uint> col_widths(table &tblf) {
 }
 
 // Format an istream table onto stdout.
-int tblf(std::istream & f, char sep, bool want_zebra, bool want_right, bool want_lineno) {
+int tblf(std::istream & f, char sep, bool want_zebra, bool want_right, bool want_lineno, intvec want_cols) {
   std::string line;
   table rows;
 
@@ -193,6 +200,7 @@ int tblf(std::istream & f, char sep, bool want_zebra, bool want_right, bool want
     if (want_zebra and (row % 2 == 1)) std::cout << "\x1b[1m";
 
     for (uint col = 0; col < rows[row].size(); col++) {
+      if (want_cols.size() > 0 and std::find(want_cols.begin(), want_cols.end(), int(col)+1) == want_cols.end()) continue;
       std::string val = rows[row][col];
       int len = strlen_utf8(val);
       int width = widths[col];
@@ -220,9 +228,10 @@ int main(int argc, char* argv[]) {
   bool want_zebra = false;  // Do I want zebra striping?
   bool want_right = true;   // Do I want right-alignment of numbers?
   bool want_lineno = false; // Do I want line numbers?
+  intvec want_cols;         // Which columns do I want?
   int c;
 
-  while ((c = getopt (argc, argv, "d:zlrn")) != -1) {
+  while ((c = getopt (argc, argv, "d:zlrnf:")) != -1) {
     switch (c) {
       case 'd':
         sep = optarg[0];
@@ -239,6 +248,9 @@ int main(int argc, char* argv[]) {
       case 'n':
         want_lineno = true; // Yes, I want line numbering!
         break;
+      case 'f':
+        want_cols.insert(want_cols.end(), intval(std::string(optarg)));
+        break;
     }
   }
 
@@ -254,11 +266,11 @@ int main(int argc, char* argv[]) {
     // Use stdin
     std::stringstream ss;
     ss << std::cin.rdbuf();
-    return tblf(ss, sep, want_zebra, want_right, want_lineno);
+    return tblf(ss, sep, want_zebra, want_right, want_lineno, want_cols);
   } else {
     // Open a file and use that
     std::ifstream f(file.c_str());
-    return tblf(f, sep, want_zebra, want_right, want_lineno);
+    return tblf(f, sep, want_zebra, want_right, want_lineno, want_cols);
   }
 
   // This shouldn't happen
