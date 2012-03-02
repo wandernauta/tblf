@@ -8,7 +8,7 @@ tblf: tblf.cpp
 
 check: all
 	./tblf -nz test/1.csv
-	./tblf -n test/2.csv
+	./tblf -n test/2.tsv
 	./tblf test/3.csv
 
 README:

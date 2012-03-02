@@ -165,6 +165,10 @@ int tblf(std::istream & f, char sep, bool want_zebra, bool want_right, bool want
     if (line == "") {
       continue; // Collapse empty lines
     } else {
+      if ((line.size() > 0) and (line[line.size() - 1] == '\r')) {
+        // Chop off any Windows-style newlines
+        line.resize(line.size() - 1);
+      }
       if (want_lineno) row.push_back(strval(lineno));
 
       std::istringstream lines(line);
